@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title%>
+    </title>
+    <script src="https://kit.fontawesome.com/c81b4dd8f6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+
+<body>
+    <div class="outer_contacts">
+        <h1 id="heading">
+            <i class="fas fa-address-book"></i>
+            MY CONTACT LIST
+        </h1>
+        <br>
+        <div class="list_of_contact">
+            <% for(let i of contact_List) { %>
+                <div class="contacts">
+                    <img src="/images/person.png" alt="" style="width: 35px; height: 35px; border-radius: 50%;"
+                        class="profile_img">
+                    <%= i.name%>
+                        <a href="/delete_contact/?id=<%= i._id%>" class="delete_icon"
+                            style="margin-left: 20px; color: lightgrey; background-color: white;">
+                            <i class="fa-solid fa-user-minus"></i>
+                        </a>
+                        <div class="hide">
+                            Want to delete this contact
+                        </div>
+                        <p>
+                            <%= i.phone%>
+                        </p>
+                </div>
+                <% } %>
+        </div>
+    </div>
+
+    <div class="form" style="position: fixed; right: 50px; top: 20px;">
+        <h1>
+            ADD PHONE NUMBER
+        </h1>
+        <form action="/create_contact" method="POST">
+            <input type="text" name="name" placeholder="Enter name" required>
+            <br>
+            <input type="number" name="phone" placeholder="Enter phone number" required>
+            <br>
+            <div>
+                <button type="submit" style="margin-right: 5px;" id="add">
+                    Add
+                </button>
+
+                <button type="reset" style="margin-left: 5px;" id="cancel">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="small_form">
+        <br><br>
+        <h1>
+            ADD PHONE NUMBER
+        </h1>
+        <form action="/create_contact" method="POST">
+            <input type="text" name="name" placeholder="Enter name" required>
+            <br>
+            <input type="number" name="phone" placeholder="Enter phone number" required>
+            <br>
+            <div>
+                <button type="submit" style="margin-right: 5px;" id="add1">
+                    Add
+                </button>
+
+                <button type="reset" style="margin-left: 5px;" id="cancel1">
+                    Cancel
+                </button>
+                <br><br>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript" src="/js/home.js"></script>
+</body>
+
+</html>

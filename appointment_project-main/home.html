@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  <title>home</title>
+  <link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo"><img src="logo.jpg" alt=""></div>
+    <!-- NAVIGATION MENU -->
+    <ul class="nav-links">
+      <!-- USING CHECKBOX HACK -->
+      <input type="checkbox" id="checkbox_toggle" />
+      <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+      <!-- NAVIGATION MENUS -->
+      <div class="menu">
+        <li><a href="all_appointments">Your appointments</a></li>
+        <li><a href="about.html">Profile</a></li>
+        <li><a href="about_us.html">About us</a></li>
+        <li><a id="log_out" style="cursor: pointer;">Logout</a></li>
+      </div>
+    </ul>
+  </nav>
+  <br>
+
+  <div class="cards">
+    <div class="card">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="avtar.png" alt="Avatar" style="width:300px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <p style="margin-top:20px; font-size: 40px;">Person name</p>
+            <p style="margin-top:50px; font-size: 20px;">Details</p>
+            <button onclick="window.location.href = 'form.html'"
+              style="margin-top:50px; font-size: 20px; border-radius: 10px; padding: 5px; border: 0px white; box-shadow: 0px 4px 8px 0px white; background-color: #6359ef; color: white; cursor: pointer;">Take
+              appointment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="avtar.png" alt="Avatar" style="width:300px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <p style="margin-top:20px; font-size: 40px;">Person name</p>
+            <p style="margin-top:50px; font-size: 20px;">Details</p>
+            <button onclick="window.location.href = 'form.html'"
+              style="margin-top:50px; font-size: 20px; border-radius: 10px; padding: 5px; border: 0px white; box-shadow: 0px 4px 8px 0px white; background-color: #6359ef; color: white; cursor: pointer;">Take
+              appointment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="avtar.png" alt="Avatar" style="width:300px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <p style="margin-top:20px; font-size: 40px;">Person name</p>
+            <p style="margin-top:50px; font-size: 20px;">Details</p>
+            <button onclick="window.location.href = 'form.html'"
+              style="margin-top:50px; font-size: 20px; border-radius: 10px; padding: 5px; border: 0px white; box-shadow: 0px 4px 8px 0px white; background-color: #6359ef; color: white; cursor: pointer;">Take
+              appointment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="avtar.png" alt="Avatar" style="width:300px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <p style="margin-top:20px; font-size: 40px;">Person name</p>
+            <p style="margin-top:50px; font-size: 20px;">Details</p>
+            <button onclick="window.location.href = 'form.html'"
+              style="margin-top:50px; font-size: 20px; border-radius: 10px; padding: 5px; border: 0px white; box-shadow: 0px 4px 8px 0px white; background-color: #6359ef; color: white; cursor: pointer;">Take
+              appointment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="avtar.png" alt="Avatar" style="width:300px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <p style="margin-top:20px; font-size: 40px;">Person name</p>
+            <p style="margin-top:50px; font-size: 20px;">Details</p>
+            <button onclick="window.location.href = 'form.html'"
+              style="margin-top:50px; font-size: 20px; border-radius: 10px; padding: 5px; border: 0px white; box-shadow: 0px 4px 8px 0px white; background-color: #6359ef; color: white; cursor: pointer;">Take
+              appointment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="avtar.png" alt="Avatar" style="width:300px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <p style="margin-top:20px; font-size: 40px;">Person name</p>
+            <p style="margin-top:50px; font-size: 20px;">Details</p>
+            <button onclick="window.location.href = 'form.html'"
+              style="margin-top:50px; font-size: 20px; border-radius: 10px; padding: 5px; border: 0px white; box-shadow: 0px 4px 8px 0px white; background-color: #6359ef; color: white; cursor: pointer;">Take
+              appointment</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    if (localStorage.getItem("uservalue") == 1) {
+      document.getElementById("public").style.display = "none";
+      document.getElementById("admin").style.display = "block";
+    }
+    else if (localStorage.getItem("uservalue") == 2) {
+      document.getElementById("public").style.display = "block";
+      document.getElementById("admin").style.display = "none";
+    }
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+    import {
+      getDatabase,
+      set,
+      ref,
+      update,
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDV5ax-2OtW4wXJgcswqClxxavya9uJI34",
+      authDomain: "appointment-project-827ab.firebaseapp.com",
+      projectId: "appointment-project-827ab",
+      storageBucket: "appointment-project-827ab.appspot.com",
+      messagingSenderId: "1067228311480",
+      databaseUrl: "https://console.firebase.google.com/u/0/project/appointment-project-827ab/database/appointment-project-827ab-default-rtdb/data/~2F",
+      appId: "1:1067228311480:web:b4d887351db86fe287e94d",
+      measurementId: "G-DESRDSWC49"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    // Get a reference to the database service
+    const db = getDatabase(app);
+    var sout = document.getElementById("log_out");
+    sout.addEventListener("click", function () {
+
+      signOut(auth).then(() => {
+        window.setTimeout(function () {
+          window.location.href = "index.html";
+        }, 1000);
+        // Sign-out successful.
+      }).catch((error) => {
+        // An error happened.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage);
+      });
+    });
+
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign up</title>
+  <link rel="stylesheet" href="index.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <section>
+    <div class="imgbox">
+      <img src="bgin.png" />
+    </div>
+    <div class="contentbox">
+      <div class="formbox">
+        <div class="heading" style="text-align:center;">
+          <span style="color: #538dfa; font-size: 50px;">Sign Up</span>
+        </div>
+        <br>
+        <br>
+        <br>
+
+        <div class="inputbox">
+          <span style="color: #538dfa;">User name</span>
+          <input type="text" id="u_name" name="userName" placeholder="Enter username..." />
+        </div>
+
+        <div class="inputbox">
+          <span style="color: #538dfa;">Email Address</span>
+          <input type="text" id="email" name="email" placeholder="Enter email..." />
+        </div>
+
+        <div class="inputbox">
+          <span style="color: #538dfa;">Password</span>
+          <input type="password" id="password" name="password" placeholder="Enter password..." />
+        </div>
+
+        <div class="inputbox">
+          <input type="submit" value="Sign up" id="Signup" name="signin_submit" />
+        </div>
+
+        <div class="inputbox" style="text-align: center;">
+          <p>Already have account ? <a href="index.html" style="color: #538dfa;">Sign In</a></p>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="progressContainer">
+          <div class="progress_bar">
+
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+    import {
+      getDatabase,
+      set,
+      ref,
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDV5ax-2OtW4wXJgcswqClxxavya9uJI34",
+      authDomain: "appointment-project-827ab.firebaseapp.com",
+      projectId: "appointment-project-827ab",
+      storageBucket: "appointment-project-827ab.appspot.com",
+      messagingSenderId: "1067228311480",
+      databaseUrl: "https://console.firebase.google.com/u/0/project/appointment-project-827ab/database/appointment-project-827ab-default-rtdb/data/~2F",
+      appId: "1:1067228311480:web:b4d887351db86fe287e94d",
+      measurementId: "G-DESRDSWC49"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    const db = getDatabase(app);
+
+    var username = document.getElementById("u_name").value;
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+
+    var signup = document.getElementById("Signup");
+
+    signup.addEventListener("click", function () {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          
+          const user = userCredential.user;
+
+          set(ref(db, "users/" + user.uid), {
+            username: username,
+            email: email,
+            password: password,
+          });
+          const progress_bar = document.querySelector('.progress_bar')
+          progress_bar.setAttribute('id', 'play_animation')
+          window.setTimeout(function () {
+            window.location.href = "login.html";
+          }, 2000);
+
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+        });
+    });
+  </script>
+</body>
+
+</html>

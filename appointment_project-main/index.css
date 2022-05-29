@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Libre Baskerville', serif;
+    font-size: large;
+}
+
+section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+section .imgbox {
+    position: relative;
+    width: 50%;
+    height: 100%;
+}
+
+section .imgbox:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(225deg, #2415f3bb, #00000060);
+    z-index: 1;
+    mix-blend-mode: screen;
+}
+
+section .imgbox img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+section .contentbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+
+}
+
+section .contentbox .formbox {
+    width: 50%;
+}
+
+section .contentbox .formbox h2 {
+    color: rgb(22, 2, 44);
+    font-weight: 600;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-bottom: 4px solid rgba(21, 2, 37, 0.842);
+    display: inline-block;
+    letter-spacing: 1px;
+}
+
+section .contentbox .formbox .inputbox {
+    margin-bottom: 20px;
+}
+
+section .contentbox .formbox .inputbox span {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: inline-block;
+    color: black;
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+section .contentbox .formbox .inputbox input {
+    width: 100%;
+    padding: 10px 20px;
+    outline: none;
+    font-weight: 400;
+    border: 0px solid white;
+    box-shadow: 0px 4px 4px 0px lightgrey;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: rgb(0, 0, 0);
+    background: transparent;
+    border-radius: 30px;
+}
+
+section .contentbox .formbox .inputbox input[type="submit"] {
+    background: #538dfa;
+    color: #fff;
+    outline: none;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+section .contentbox .formbox .inputbox input[type="submit"]:hover {
+    background: #6359ef;
+}
+
+section .contentbox .formbox .remember {
+    margin-bottom: 10px;
+    color: #4b3805;
+    font-weight: 400;
+    font-size: 14px;
+
+}
+
+section .contentbox .formbox h3 {
+    color: #4b3805;
+    text-align: center;
+    margin: 80px 0 10px;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+section .contentbox .formbox .sci {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section .contentbox .formbox .sci li {
+    list-style: none;
+}
+
+section .contentbox .formbox .sci .limg {
+    list-style: none;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(38, 126, 240, 0.733);
+    border-radius: 50%;
+    margin: 0 7px;
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+section .contentbox .formbox .sci .limg:hover+.hide {
+    display: flex;
+    color: rgb(33, 92, 87);
+}
+ 
+.contentbox .progressBar{
+    visibility: hidden;
+}
+
+.progressContainer{
+    height: 10px;
+    background-color: white;
+    position: relative;
+    border-radius: 5px;
+}
+
+.progressContainer .progress_bar{
+    position: absolute;
+    height: 100%;
+    background-color: #6359ef;
+    border-radius: 5px;
+}
+
+#play_animation{
+    animation: progress_animation 2s forwards;
+}
+
+@keyframes progress_animation{
+    0% {width: 0%;}
+    100% {width: 100%;}
+}
+
+@media(max-width: 768px) {
+    section .imgbox {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    section .contentbox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    section .contentbox .formbox {
+        width: 100%;
+        padding: 40px;
+        background: rgba(253, 253, 253, 0.596);
+        margin: 50px;
+    }
+}

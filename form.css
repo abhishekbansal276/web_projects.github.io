@@ -19,7 +19,8 @@ body {
 .container {
     max-width: 700px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.603);
+    background-color: white;
+    box-shadow: 0px 4px 8px 0px rgb(171, 165, 165);
     padding: 25px 30px;
     border-radius: 7px;
 }
@@ -38,42 +39,46 @@ body {
     height: 3px;
     width: 30px;
     background: linear-gradient(135deg, #094872, hsl(219, 10%, 68%));
-
 }
 
-.container form .user_details {
-    /* display:flex; */
-    /* flex-wrap: wrap; */
-    justify-content: space-between;
-    margin: 20px 0 12px 0;
-}
-
-form .user_details .input_box {
-    margin-bottom: 15px;
-    width: cala(100% / 2 - 20px);
-
-}
-
-.user_details .input_box .details {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 5px;
-}
-
-.user_details .input_box input {
-    height: 45px;
+.input_box input{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
     width: 100%;
-    outline: none;
     border-radius: 5px;
-    border: 1px solid #ccc;
-    padding-left: 15px;
-    font-size: 16px;
-    border-bottom-width: 2px;
-    transition: all 0.3s ease;
-
+    height: 45px;
+    border: 0px white;
+    box-shadow: 0px 4px 8px 0px rgb(171, 165, 165);
 }
 
-.user_details .input_box input:focus,
-.user_details .input_box input:valid {
-    border-color: black;
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.input_box .labels{
+    font-size: 15px;
+}
+
+.input_box button{
+    margin-top: 10px;
+    width: 80px;
+    height: 35px;
+    font-size: 15px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px 0px rgb(101, 100, 100);
+    border: 0px white;
+    background-color: white;
+}
+
+.input_box button[type="submit"]:hover{
+    box-shadow: 0px 0px 0px 0px rgb(255, 255, 255);
+    background: green;
+    color: white;
+}
+
+.input_box button[type="reset"]:hover{
+    box-shadow: 0px 0px 0px 0px rgb(255, 255, 255);
+    background: red;
+    color: white;
 }

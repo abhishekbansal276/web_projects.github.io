@@ -30,7 +30,7 @@
           <span style="color: #538dfa;">Email Address</span>
           <input type="email" id="email" name="email" placeholder="Enter email..." />
         </div>
-        
+
         <div class="inputbox">
           <span style="color: #538dfa;">Password</span>
           <input type="password" id="password" name="password" placeholder="Enter password..." />
@@ -44,6 +44,12 @@
           <p>Do not have account ? <a href="signup.html" style="color: #538dfa;">Sign Up</a></p>
         </div>
 
+        <div class="options">
+          <a href="adminLogin.html"><img src="admin.png" alt="" id="adminImg"></a>
+          <br>
+          Login as admin?
+        </div>
+
         <br>
         <br>
 
@@ -53,7 +59,7 @@
           </div>
         </div>
       </div>
-      
+
     </div>
   </section>
 
@@ -65,6 +71,7 @@
       set,
       ref,
       update,
+      onValue,
     } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
     import {
       getAuth,
@@ -103,13 +110,40 @@
           update(ref(db, "users/" + user.uid), {
             last_login: dt,
           });
-          
+
           const progress_bar = document.querySelector('.progress_bar')
           progress_bar.setAttribute('id', 'play_animation')
-          
+
+          var id;
+          var img;
+          const userId = auth.currentUser.uid;
+          var instance_for_user = ref(db, 'users/' + user.uid);
+
+          onValue(ref(db, '/users/' + user.uid), (snapshot) => {
+            id = (snapshot.val() && snapshot.val().id);
+            img = (snapshot.val() && snapshot.val().img);
+            console.log("id", id);
+            console.log("type", typeof id);
+            console.log("id", img);
+            console.log("type", typeof img);
+          });
+
           window.setTimeout(function () {
-            window.location.href = "home.html";
-          }, 2000);
+            if (id === 0) {
+              localStorage.setItem("userId", user.uid);
+              localStorage.setItem("imgUrl", img);
+              if (img == '0') {
+                window.location.href = "profileupdate.html";
+              }
+              else{
+                window.location.href = "home.html";
+              }
+            }
+            else {
+              alert("You are not register!\nPlease register.");
+              window.location.href = "signup.html";
+            }
+          }, 5000);
 
         })
         .catch((error) => {

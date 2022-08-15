@@ -58,7 +58,7 @@
           </div>
         </div>
       </div>
-      
+
     </div>
   </section>
 
@@ -69,10 +69,13 @@
       getDatabase,
       set,
       ref,
+      update,
     } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
     import {
       getAuth,
       createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
     } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 
     const firebaseConfig = {
@@ -92,29 +95,37 @@
 
     const db = getDatabase(app);
 
-    var username = document.getElementById("u_name").value;
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
+    var sup = document.getElementById("Signup");
 
-    var signup = document.getElementById("Signup");
+    sup.addEventListener("click", function () {
+      const progress_bar = document.querySelector('.progress_bar')
+      progress_bar.setAttribute('id', 'play_animation')
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      var userName = document.getElementById("u_name").value;
 
-    signup.addEventListener("click", function () {
+      localStorage.setItem("email", email);
+
+
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          
+
           const user = userCredential.user;
+          const dt = new Date();
 
           set(ref(db, "users/" + user.uid), {
-            username: username,
+            username: userName,
             email: email,
             password: password,
+            id: 0,
+            img: "0",
+            no_of_appoint: 0,
           });
-          const progress_bar = document.querySelector('.progress_bar')
-          progress_bar.setAttribute('id', 'play_animation')
           window.setTimeout(function () {
-            window.location.href = "login.html";
-          }, 2000);
+            localStorage.setItem("user id", user.uid);
 
+            window.location.href = "profileupdate.html";
+          }, 5000);
         })
         .catch((error) => {
           const errorCode = error.code;

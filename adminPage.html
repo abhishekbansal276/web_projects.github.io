@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="user_profile.css">
+    <title>Your Profile</title>
+</head>
+
+<body>
+    <div class="headBar">
+        <a href="" style="text-decoration: none;"><span style="color: #ffffff; font-size: 30px;">Your Profile</span></a>
+    </div>
+    <div class="contentBox">
+        <div class="imageDiv" id="imgBox">
+
+        </div>
+        <br>
+        <br>
+        <span id="name" style="color: white; font-size: 20px; font-weight: bolder;">User name</span>
+        <br>
+        <br>
+        <span id="email" style="color: white; font-size: 20px; font-weight: bolder;">Email</span>
+        <br>
+        <br>
+        <span id="l_login" style="color: white; font-size: 20px; font-weight: bolder;">Last login</span>
+        <br>
+        <div class="inputbox">
+            <input type="submit" value="See Appointments" id="see_appoint" name="All_appointments" />
+        </div>
+        <div class="inputbox">
+            <input type="submit" value="Change Photo" id="photoChange" name="Change_photo" />
+        </div>
+        <div class="inputbox">
+            <input type="submit" value="Reset Password" id="resetPassword" name="Password_reset" />
+        </div>
+    </div>
+
+    <script type="module">
+        var imageUrl = localStorage.getItem("imageid");
+        var user_id = localStorage.getItem("userId");
+
+        var boxDiv = document.getElementById("imgBox");
+        boxDiv.style.backgroundImage = "url(" + imageUrl + ")";
+
+        var goto_appoint = document.getElementById("see_appoint");
+        var p_change = document.getElementById("photoChange");
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+        import {
+            getDatabase,
+            set,
+            ref,
+            update,
+            onValue,
+        } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyDV5ax-2OtW4wXJgcswqClxxavya9uJI34",
+            authDomain: "appointment-project-827ab.firebaseapp.com",
+            projectId: "appointment-project-827ab",
+            storageBucket: "appointment-project-827ab.appspot.com",
+            messagingSenderId: "1067228311480",
+            databaseUrl: "https://console.firebase.google.com/u/0/project/appointment-project-827ab/database/appointment-project-827ab-default-rtdb/data/~2F",
+            appId: "1:1067228311480:web:b4d887351db86fe287e94d",
+            measurementId: "G-DESRDSWC49"
+        };
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase(app);
+
+        var email;
+        var last_login;
+        var user_name;
+
+        onValue(ref(db, '/users/' + user_id), (snapshot) => {
+            email = (snapshot.val() && snapshot.val().email);
+            last_login = (snapshot.val() && snapshot.val().last_login);
+            user_name = (snapshot.val() && snapshot.val().username);
+        });
+
+        window.setTimeout(function () {
+            email = "Email : " + email
+            last_login = "Last login : " + last_login
+            user_name = "Username : " + user_name
+            document.getElementById("name").innerHTML = user_name;
+            document.getElementById("email").innerHTML = email;
+            document.getElementById("l_login").innerHTML = last_login;
+        }, 5000);
+
+        goto_appoint.addEventListener("click", function () {
+            window.location.href = "admin_appointments.html";
+        });
+
+        p_change.addEventListener("click", function () {
+            window.location.href = "profileupdate.html";
+        });
+    </script>
+</body>
+
+</html>

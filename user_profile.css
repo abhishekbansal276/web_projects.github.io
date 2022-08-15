@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Libre Baskerville', serif;
+    font-size: large;
+}
+
+body{
+    text-align: center;
+    background-color: white;
+}
+
+.headBar{
+    padding-top: 6px;
+    width: 97%;
+    height: 50px;
+    background: #6359ef;
+    margin: auto;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.contentBox {
+    background-color: #6359ef;
+    margin: auto;
+    margin-top: 20px;
+    width: 350px;
+    box-shadow: 0px 4px 4px 0px #aca7f5;
+    padding: 15px;
+    border-radius: 20px;
+}
+
+.contentBox .imageDiv {
+    margin: auto;
+    margin-top: 50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.inputbox input[type="Submit"]{
+    width: 200px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    border-radius: 30px;
+    background: white;
+    color: #538dfa;
+    outline: none;
+    border: none;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.inputbox input[type="submit"]:hover {
+    background: #6359ef;
+    color: #fff;
+}
+
+.main_container{
+    text-align: left;
+}
+
+h2{
+    color: #fff;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.main_container ul li{
+    color: #fff;
+    font-weight: 500;
+}

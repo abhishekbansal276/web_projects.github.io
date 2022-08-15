@@ -60,24 +60,23 @@ textarea:focus, input:focus{
     font-size: 15px;
 }
 
-.input_box button{
-    margin-top: 10px;
-    width: 80px;
-    height: 35px;
+.input_box .inputbox input{
+    width: 200px;
     font-size: 15px;
     border-radius: 4px;
     box-shadow: 0px 4px 8px 0px rgb(101, 100, 100);
-    border: 0px white;
+    border: none;
     background-color: white;
+    cursor: pointer;
 }
 
-.input_box button[type="submit"]:hover{
+.input_box .inputbox input[type="submit"]:hover{
     box-shadow: 0px 0px 0px 0px rgb(255, 255, 255);
     background: green;
     color: white;
 }
 
-.input_box button[type="reset"]:hover{
+.input_box .inputbox input[type="reset"]:hover{
     box-shadow: 0px 0px 0px 0px rgb(255, 255, 255);
     background: red;
     color: white;

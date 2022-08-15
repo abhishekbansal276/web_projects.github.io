@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="user_profile.css">
+    <title>Your Appointments</title>
+</head>
+
+<body>
+    <div class="main_container">
+        <div class="headBar">
+            <a href="" style="text-decoration: none;"><span style="color: #ffffff; font-size: 30px;">Your
+                    Appointments</span></a>
+        </div>
+        <ul id="appoint_list">
+
+        </ul>
+        <span style="color: #ffffff; font-size: 15px; margin-top: 30px;" id="loadingSpan">Loading...</span>
+    </div>
+
+    <script type="module">
+        var user_id = localStorage.getItem("userId");
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+        import {
+            getDatabase,
+            set,
+            ref,
+            update,
+            onValue,
+        } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyDV5ax-2OtW4wXJgcswqClxxavya9uJI34",
+            authDomain: "appointment-project-827ab.firebaseapp.com",
+            projectId: "appointment-project-827ab",
+            storageBucket: "appointment-project-827ab.appspot.com",
+            messagingSenderId: "1067228311480",
+            databaseUrl: "https://console.firebase.google.com/u/0/project/appointment-project-827ab/database/appointment-project-827ab-default-rtdb/data/~2F",
+            appId: "1:1067228311480:web:b4d887351db86fe287e94d",
+            measurementId: "G-DESRDSWC49"
+        };
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase(app);
+
+        var appoint_no = 0;
+        function addItemsToList(Email, Phone_number, Reason) {
+            var ul = document.getElementById('appoint_list');
+            var header = document.createElement('h2');
+
+            var _email = document.createElement('li');
+            var _Phone_number = document.createElement('li');
+            var _Reason = document.createElement('li');
+        
+            header.innerHTML = 'Appointment : ' + (++appoint_no);
+
+            _email.innerHTML = 'Email - ' + Email;
+            _Phone_number.innerHTML = 'Phone number - ' + Phone_number;
+            _Reason.innerHTML = 'Reason - ' + Reason;
+            
+            ul.append(header);
+            ul.append(_email);
+            ul.append(_Phone_number);
+            ul.append(_Reason);
+        }
+
+        function FetchAllData() {
+            var position = localStorage.getItem("position");
+            onValue(ref(db, '/admins/' + position), (snapshot) => {
+                snapshot.forEach(
+                    function (ChildSnapshot) {
+                        let email = (ChildSnapshot.val() && ChildSnapshot.val().Email);
+                        let p_number = (ChildSnapshot.val() && ChildSnapshot.val().Phone_number);
+                        let reason = (ChildSnapshot.val() && ChildSnapshot.val().Reason);
+                        window.setTimeout(function () {
+                            console.log(email)
+                            console.log(p_number)
+                            console.log(reason)
+                            addItemsToList(email, p_number, reason);
+                        }, 8000);
+                    }
+                );
+            });
+        }
+        var ret = FetchAllData();
+        window.onload = ret;
+    </script>
+
+</body>
+
+</html>

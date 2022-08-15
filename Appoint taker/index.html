@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in</title>
+  <link rel="stylesheet" href="index.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <section>
+    <div class="imgbox">
+      <img src="bgin.png" />
+    </div>
+    <div class="contentbox">
+      <div class="formbox">
+        <div class="heading" style="text-align:center;">
+          <span style="color: #538dfa; font-size: 50px;">Sign In</span>
+        </div>
+        <br>
+        <br>
+        <br>
+
+        <div class="inputbox">
+          <span style="color: #538dfa;">Email Address</span>
+          <input type="email" id="email" name="email" placeholder="Enter email..." />
+        </div>
+
+        <div class="inputbox">
+          <span style="color: #538dfa;">Password</span>
+          <input type="password" id="password" name="password" placeholder="Enter password..." />
+        </div>
+
+        <div class="inputbox">
+          <input type="submit" value="Sign In" id="Signin" name="signin_submit" />
+        </div>
+
+        <div class="inputbox" style="text-align: center;">
+          <p>Do not have account ? <a href="signup.html" style="color: #538dfa;">Sign Up</a></p>
+        </div>
+
+        <div class="options">
+          <a href="adminLogin.html"><img src="admin.png" alt="" id="adminImg"></a>
+          <br>
+          Login as admin?
+        </div>
+
+        <br>
+        <br>
+
+        <div class="progressContainer">
+          <div class="progress_bar">
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+    import {
+      getDatabase,
+      set,
+      ref,
+      update,
+      onValue,
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDV5ax-2OtW4wXJgcswqClxxavya9uJI34",
+      authDomain: "appointment-project-827ab.firebaseapp.com",
+      projectId: "appointment-project-827ab",
+      storageBucket: "appointment-project-827ab.appspot.com",
+      messagingSenderId: "1067228311480",
+      databaseUrl: "https://console.firebase.google.com/u/0/project/appointment-project-827ab/database/appointment-project-827ab-default-rtdb/data/~2F",
+      appId: "1:1067228311480:web:b4d887351db86fe287e94d",
+      measurementId: "G-DESRDSWC49"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    const db = getDatabase(app);
+
+    var sin = document.getElementById("Signin");
+
+    sin.addEventListener("click", function () {
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+
+          const user = userCredential.user;
+          const dt = new Date();
+          update(ref(db, "users/" + user.uid), {
+            last_login: dt,
+          });
+
+          const progress_bar = document.querySelector('.progress_bar')
+          progress_bar.setAttribute('id', 'play_animation')
+
+          var id;
+          var img;
+          const userId = auth.currentUser.uid;
+          var instance_for_user = ref(db, 'users/' + user.uid);
+
+          onValue(ref(db, '/users/' + user.uid), (snapshot) => {
+            id = (snapshot.val() && snapshot.val().id);
+            img = (snapshot.val() && snapshot.val().img);
+            console.log("id", id);
+            console.log("type", typeof id);
+            console.log("id", img);
+            console.log("type", typeof img);
+          });
+
+          window.setTimeout(function () {
+            if (id === 0) {
+              localStorage.setItem("userId", user.uid);
+              localStorage.setItem("imgUrl", img);
+              if (img == '0') {
+                window.location.href = "profileupdate.html";
+              }
+              else{
+                window.location.href = "home.html";
+              }
+            }
+            else {
+              alert("You are not register!\nPlease register.");
+              window.location.href = "signup.html";
+            }
+          }, 5000);
+
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+        });
+    });
+  </script>
+</body>
+
+</html>

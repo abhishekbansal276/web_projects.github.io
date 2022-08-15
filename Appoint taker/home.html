@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  <title>home</title>
+  <link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo"><img src="logo.jpg" alt=""></div>
+    <!-- NAVIGATION MENU -->
+    <ul class="nav-links">
+      <!-- USING CHECKBOX HACK -->
+      <input type="checkbox" id="checkbox_toggle" />
+      <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+      <!-- NAVIGATION MENUS -->
+      <div class="menu">
+        <li><a href="user_appointments.html">Your appointments</a></li>
+        <li><a href="user_profile.html">Profile</a></li>
+        <li><a href="about_us.html">About us</a></li>
+        <li><a id="log_out" style="cursor: pointer;">Logout</a></li>
+      </div>
+    </ul>
+  </nav>
+  <br>
+
+  <div id="app_admins" class="admin_appointment_div">
+
+  </div>
+
+  <script type="module">
+    if (localStorage.getItem("uservalue") == 1) {
+      document.getElementById("public").style.display = "none";
+      document.getElementById("admin").style.display = "block";
+    }
+    else if (localStorage.getItem("uservalue") == 2) {
+      document.getElementById("public").style.display = "block";
+      document.getElementById("admin").style.display = "none";
+    }
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+    import {
+      getDatabase,
+      set,
+      ref,
+      update,
+      onValue,
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDV5ax-2OtW4wXJgcswqClxxavya9uJI34",
+      authDomain: "appointment-project-827ab.firebaseapp.com",
+      projectId: "appointment-project-827ab",
+      storageBucket: "appointment-project-827ab.appspot.com",
+      messagingSenderId: "1067228311480",
+      databaseUrl: "https://console.firebase.google.com/u/0/project/appointment-project-827ab/database/appointment-project-827ab-default-rtdb/data/~2F",
+      appId: "1:1067228311480:web:b4d887351db86fe287e94d",
+      measurementId: "G-DESRDSWC49"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    // Get a reference to the database service
+    const db = getDatabase(app);
+    var sout = document.getElementById("log_out");
+
+    sout.addEventListener("click", function () {
+
+      signOut(auth).then(() => {
+        window.setTimeout(function () {
+          window.location.href = "index.html";
+        }, 1000);
+        // Sign-out successful.
+      }).catch((error) => {
+        // An error happened.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage);
+      });
+    });
+
+
+    var addmin_no = 0;
+
+    function add_div_todo(_name, _position, _other, _fees, _education, _button, Img_url) {
+      var todo_div = document.createElement('div');
+      var _imgDiv = document.createElement('div');
+      var img = document.createElement('img');
+      img.src = Img_url;
+      _imgDiv.append(img);
+      todo_div.append(_imgDiv);
+      todo_div.append(_name);
+      todo_div.append(_position);
+      todo_div.append(_education);
+      todo_div.append(_fees);
+      todo_div.append(_other);
+      todo_div.append(_button);
+      document.getElementById('app_admins').appendChild(todo_div);
+    }
+
+    function addItemsToList(Name, Position, Any_Other, Fees, Education, Img_url) {
+      var _name = document.createElement('h1');
+      var _position = document.createElement('h2');
+      var _other = document.createElement('h2');
+      var _fees = document.createElement('h2');
+      var _education = document.createElement('h2');
+      var button = document.createElement('button');
+
+      button.innerHTML = 'Take Appointment';
+      button.onclick = function () {
+        window.location.href = "form.html";
+      };
+
+      _name.innerHTML = 'Name- ' + Name;
+      _position.innerHTML = 'Role- ' + Position;
+      _other.innerHTML = 'Other info.- ' + Any_Other;
+      _fees.innerHTML = 'Fees - ' + Fees;
+      _education.innerHTML = 'Education- ' + Education;
+
+      add_div_todo(_name, _position, _other, _fees, _education, button, Img_url);
+    }
+
+    function FetchAllData() {
+      onValue(ref(db, "/admin_details"), (snapshot) => {
+        snapshot.forEach(
+          function (ChildSnapshot) {
+            let name = (ChildSnapshot.val() && ChildSnapshot.val().Name);
+            let position = (ChildSnapshot.val() && ChildSnapshot.val().Position);
+            let anyOther = (ChildSnapshot.val() && ChildSnapshot.val().Other_details);
+            let fees = (ChildSnapshot.val() && ChildSnapshot.val().Fees);
+            let education = (ChildSnapshot.val() && ChildSnapshot.val().Education);
+            let img_url = (ChildSnapshot.val() && ChildSnapshot.val().img_url);
+            console.log(img_url)
+            window.setTimeout(function () {
+              addItemsToList(name, position, anyOther, fees, education, img_url);
+            }, 2000);
+          }
+        );
+      });
+    }
+    var ret = FetchAllData();
+    window.onload = ret;
+
+  </script>
+
+
+</body>
+
+</html>

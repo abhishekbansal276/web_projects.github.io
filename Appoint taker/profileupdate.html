@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>profileupdate</title>
+  <link rel="stylesheet" href="index.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <section>
+    <div class="imgbox">
+      <img src="bgin.png" />
+    </div>
+    <div class="contentbox_profile">
+      <div class="formbox">
+        <span style="color: #538dfa; font-size: 50px;">Photo Upload</span>
+        <div class="profile_pic">
+          <img src="profile photo.png" id="myimg" alt="avatar">
+          <br>
+          <lable id="Uploading_Progress"></lable>
+        </div>
+
+        <div class="buttons_upload">
+          <div class="inputbox">
+            <input type="button" value="Select" id="selectbtn" name="image" />
+          </div>
+          <div class="inputbox">
+            <input type="button" value="Upload image" id="upload" name="image" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
+    import {
+      getDatabase,
+      set,
+      ref,
+      update,
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+
+
+
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDV5ax-2OtW4wXJgcswqClxxavya9uJI34",
+      authDomain: "appointment-project-827ab.firebaseapp.com",
+      projectId: "appointment-project-827ab",
+      storageBucket: "appointment-project-827ab.appspot.com",
+      messagingSenderId: "1067228311480",
+      databaseUrl: "https://console.firebase.google.com/u/0/project/appointment-project-827ab/database/appointment-project-827ab-default-rtdb/data/~2F",
+      appId: "1:1067228311480:web:b4d887351db86fe287e94d",
+      measurementId: "G-DESRDSWC49"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    var files = [];
+    var reader = new FileReader();
+    var myimg = document.getElementById('myimg');
+    var upbtn = document.getElementById('upload');
+    var proglab = document.getElementById('Uploading_Progress');
+    var setbtn = document.getElementById('selectbtn');
+
+    var input = document.createElement('input');
+    input.type = 'file';
+
+    input.onchange = e => {
+      files = e.target.files;
+      reader.readAsDataURL(files[0]);
+
+    }
+
+    reader.onload = function () {
+      myimg.src = reader.result;
+    }
+
+    setbtn.onclick = function () {
+      input.click();
+    }
+
+    async function uploadprocess() {
+      var imgtoupload = files[0];
+      var imgname = localStorage.getItem("user id");
+      const metaData = {
+        contentType: imgtoupload.type
+      }
+      const storage = getStorage();
+      const storageRef = sRef(storage, imgname);
+      var progress
+      var gotoindex = false
+      const uploadTask = uploadBytesResumable(storageRef, imgtoupload, metaData);
+      uploadTask.on('state-changed', (snapshot) => {
+        document.getElementById('upload').disabled = true;
+        progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        proglab.innerHTML = "Upload " + progress + "%";
+        console.log(progress)
+        gotoindex = true
+      },
+        (error) => {
+          gotoindex = false
+          document.getElementById('upload').disabled = false;
+          alert("error: Image not uploaded! ");
+        },
+        () => {
+          console.log(progress)
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log(downloadURL);
+            var uid = localStorage.getItem("user id");
+            localStorage.setItem("imageid", downloadURL);
+            update(ref(db, "users/" + uid), {
+              img: downloadURL,
+            });
+          });
+          window.setTimeout(function () {
+            if (progress >= 100 && gotoindex == true) {
+              console.log("hello")
+              window.location.href = "index.html"
+            }
+          }, 5000);
+
+        }
+      );
+    }
+    upbtn.onclick = uploadprocess;
+  </script>
+</body>
+
+</html>

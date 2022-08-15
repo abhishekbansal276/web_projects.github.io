@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">Registration</div>
+        <br>
+        <form action="#" class="input_box">
+            <div class="labels">Full Name</div>
+            <input type="text" placeholder="Enter your Name (Automatically filled)" id="UserName" disabled><br><br>
+
+            <div class="labels">Phone Number</div>
+            <input type="tel" placeholder="Enter your mobile number" required id="p_no"><br><br>
+
+            <div class="labels">Email</div>
+            <input type="email" placeholder="Enter your email" required id="email_u"><br><br>
+
+            <div class="labels">Reason of Visiting</div>
+            <input type="text" placeholder="........." required id="reason_vit"><br><br>
+
+            <div class="labels">Address</div>
+            <input type="text" placeholder="........." required id="u_add"><br><br>
+
+            <label for="meetingWith">To whom you want to meet:</label>
+
+            <select name="meetingWith" id="meetingWith">
+                <option value="selectOne">Select one</option>
+                <option value="assetManager">Asset manager</option>
+                <option value="creditAnalyst">Credit analyst</option>
+                <option value="loanOfficer">Loan officer</option>
+                <option value="bankTeller">Bank teller</option>
+                <option value="financialManager">Financial manager</option>
+                <option value="auditClerk">Audit clerk</option>
+            </select>
+
+            <br>
+            <br>
+
+            <div class="" style="display: flex; justify-content: space-around">
+                <div class="inputbox">
+                    <input type="submit" value="Submit" id="submit_det" name="submit_details" />
+                </div>
+
+                <div class="inputbox">
+                    <input type="reset" value="Reset" id="reset_det" name="reset_details" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <script type="module">
+        var user_id = localStorage.getItem("user id");
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+        import {
+            getDatabase,
+            set,
+            ref,
+            update,
+            onValue,
+        } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyDV5ax-2OtW4wXJgcswqClxxavya9uJI34",
+            authDomain: "appointment-project-827ab.firebaseapp.com",
+            projectId: "appointment-project-827ab",
+            storageBucket: "appointment-project-827ab.appspot.com",
+            messagingSenderId: "1067228311480",
+            databaseUrl: "https://console.firebase.google.com/u/0/project/appointment-project-827ab/database/appointment-project-827ab-default-rtdb/data/~2F",
+            appId: "1:1067228311480:web:b4d887351db86fe287e94d",
+            measurementId: "G-DESRDSWC49"
+        };
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase(app);
+
+        var user_name
+        var number_of_app
+
+        onValue(ref(db, '/users/' + user_id), (snapshot) => {
+            user_name = (snapshot.val() && snapshot.val().username);
+            number_of_app = (snapshot.val() && snapshot.val().no_of_appoint);
+        });
+
+        window.setTimeout(function () {
+            document.getElementById("UserName").value = user_name;
+        }, 5000);
+
+        var submitBtn = document.getElementById("submit_det");
+
+        submitBtn.addEventListener("click", function () {
+            number_of_app = number_of_app + 1
+            var num = number_of_app.toString();
+            var p_number = document.getElementById("p_no").value;
+            var email = document.getElementById("email_u").value;
+            var reason = document.getElementById("reason_vit").value;
+            var address = document.getElementById("u_add").value;
+
+            var value = document.getElementById("meetingWith");
+            var getvalue = value.options[value.selectedIndex].value;
+            var gettext = value.options[value.selectedIndex].text;
+
+            set(ref(db, "users/" + user_id + "/appointments/" + num), {
+                Phone_number: p_number,
+                Email: email,
+                Reason: reason,
+                Address: address,
+                Confirm: "No",
+                Meetinh_with: gettext,
+            });
+        });
+    </script>
+</body>
+
+</html>
